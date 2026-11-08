@@ -12,13 +12,13 @@ description: >-
 lema: "Escritos sobre Proust, Pessoa, el deseo, la memoria y otras formas de no coincidir con uno mismo."
 
 # Enlaces que aparecen al pie de la página. Deja vacío ("") lo que no uses.
-substack: "https://TU-NOMBRE.substack.com"
+substack: ""
 correo: ""
 letterboxd: ""
 
 # Cuando tengas dominio propio, pon aquí la dirección (p. ej. https://nuncasesabracomohayquecontaresto.com)
 # Mientras tanto, la de GitHub: https://TU-USUARIO.github.io
-url: ""
+url: "https://nuncasesabra.github.io"
 baseurl: ""
 
 lang: es

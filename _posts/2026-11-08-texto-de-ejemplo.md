@@ -4,7 +4,7 @@ subtitulo: Cómo se ve cada cosa que puedes usar al escribir
 categoria: ensayos
 resumen: Un texto de muestra para ver la tipografía, las citas y las notas. Bórralo cuando subas el primero de verdad.
 substack: ""
-imagen: /assets/img/ejemplo.jpg
+imagen: ""
 imagen_texto: Un muro claro con una franja oscura y una figura pequeña a la derecha
 imagen_pie: ""
 ---

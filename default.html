@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'es' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% seo title=true %}
+  {% feed_meta %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ '/assets/css/estilo.css' | relative_url }}">
+</head>
+<body{% if page.url == "/" %} class="inicio"{% endif %}>
+  <a class="saltar" href="#contenido">Ir al contenido</a>
+  <header class="cabecera envoltorio">
+    <a class="firma" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <nav class="nav" aria-label="Secciones">
+      {%- for s in site.secciones %}
+      {%- assign ruta = '/' | append: s.clave | append: '/' %}
+      <a href="{{ ruta | relative_url }}"{% if page.url == ruta %} aria-current="page"{% endif %}>{{ s.nombre | downcase }}</a>
+      {%- endfor %}
+      <a href="{{ '/sobre-mi/' | relative_url }}"{% if page.url == '/sobre-mi/' %} aria-current="page"{% endif %}>sobre mí</a>
+    </nav>
+  </header>
+
+  <main id="contenido">
+    {{ content }}
+  </main>
+
+  <footer class="pie">
+    <div class="envoltorio reticula">
+      <p class="pie-titulo">{{ site.title }}</p>
+      <div class="pie-cuerpo">
+        <p class="pie-enlaces">
+          {%- if site.substack and site.substack != "" %}<a href="{{ site.substack }}">Substack</a>{% endif %}
+          {%- if site.letterboxd and site.letterboxd != "" %}<a href="{{ site.letterboxd }}">Letterboxd</a>{% endif %}
+          {%- if site.correo and site.correo != "" %}<a href="mailto:{{ site.correo }}">{{ site.correo }}</a>{% endif %}
+          <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

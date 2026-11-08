@@ -1,0 +1,402 @@
+/* ─────────────────────────────────────────────
+   nuncasesabrácómohayquecontaresto
+
+   Una sala de lectura de 1975 (la March de Picardo:
+   franjas horizontales, piedra clara, madera oscura),
+   compuesta como un plano de Antonioni (mucho vacío,
+   la figura desplazada). Texto en azul marino;
+   verde bosque arriba y abajo, crema y beige en medio.
+   ───────────────────────────────────────────── */
+:root {
+  --verde:  #2E4A3B;   /* verde bosque: la portada y el pie      */
+  --crema:  #EFE6D3;   /* crema sobre el verde                   */
+  --fondo:  #EFE8DA;   /* crema: todo lo demás                   */
+  --franja: #E5DCCA;   /* la franja de los textos, beige         */
+  --tinta:  #1B2A47;   /* azul marino: todo el texto             */
+  --ceniza: #59627A;   /* marino apagado: texto secundario       */
+  --junta:  #CFC4AE;   /* líneas finas, como juntas de piedra    */
+  --acento: #2A4FA8;   /* azul cobalto: enlaces y notas          */
+}
+:root {
+  --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+
+  --ancho:  78rem;     /* ancho máximo de la composición        */
+  --lado:   clamp(1.25rem, 5vw, 4.5rem);
+  --campo:  5fr;       /* el vacío de la izquierda              */
+  --figura: 7fr;       /* la columna de texto                   */
+  --hueco:  clamp(2rem, 5vw, 4.5rem);
+  --medida: 34rem;     /* ~65 caracteres por línea               */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--serif);
+  font-size: 1.3125rem;
+  line-height: 1.6;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-variant-numeric: oldstyle-nums;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--tinta); color: var(--fondo); }
+
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--junta);
+  text-underline-offset: .18em;
+  transition: color .2s, text-decoration-color .2s;
+}
+a:hover { color: var(--acento); text-decoration-color: var(--acento); }
+a:focus-visible { outline: 1px solid var(--acento); outline-offset: 4px; }
+
+.saltar {
+  position: absolute; left: -999px; top: 1rem;
+  background: var(--tinta); color: var(--fondo); padding: .4rem .9rem;
+}
+.saltar:focus { left: 1rem; }
+
+/* ─── Retícula ───────────────────────────────
+   El contenido nunca está centrado: queda a la derecha
+   de un campo vacío, como una figura en un plano largo. */
+.envoltorio {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 0 var(--lado);
+}
+.reticula,
+.indice-item {
+  display: grid;
+  grid-template-columns: minmax(0, var(--campo)) minmax(0, var(--figura));
+  column-gap: var(--hueco);
+}
+
+/* Las franjas: bandas a todo el ancho, como los forjados de la fachada. */
+.franja { background: var(--franja); }
+
+/* En la portada, la cabecera y el nombre están sobre el color hondo. */
+.inicio { background: var(--verde); color: var(--crema); }
+.inicio .nav a { color: var(--crema); opacity: .75; }
+.inicio .nav a:hover { opacity: 1; color: var(--crema); }
+.inicio .lema { color: var(--crema); opacity: .8; }
+.inicio .franja { color: var(--tinta); }
+
+/* ─── Cabecera ─── */
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: .5rem 2rem;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  font-size: 1.0625rem;
+}
+.firma { text-decoration: none; font-style: italic; }
+/* En la portada el nombre ya está en grande: arriba no se repite. */
+.inicio .firma { visibility: hidden; }
+.nav { display: flex; flex-wrap: wrap; gap: .25rem 1.75rem; font-style: italic; }
+.nav a { text-decoration: none; color: var(--ceniza); }
+.nav a:hover { color: var(--acento); }
+.nav a[aria-current="page"] { color: var(--tinta); }
+
+/* ─── Portada ─── */
+.portada {
+  padding-top: clamp(5rem, 22vh, 13rem);
+  padding-bottom: clamp(4rem, 14vh, 8rem);
+}
+/* Lo único que se permite ser enorme: el nombre, de una tirada,
+   sin espacios; si no cabe, se parte donde caiga. */
+.nombre {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6.4vw, 5.15rem);
+  line-height: 1;
+  letter-spacing: -.012em;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  hyphens: none;
+  animation: aparecer 2.4s ease-out both;
+}
+.lema {
+  margin: clamp(2.5rem, 7vh, 4.5rem) 0 0;
+  margin-left: calc((100% - var(--hueco)) * 5 / 12 + var(--hueco));
+  max-width: 24rem;
+  font-style: italic;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  color: var(--ceniza);
+  animation: aparecer 2.4s 1s ease-out both;
+}
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+
+/* ─── Índice de textos ─── */
+.franja > .envoltorio { padding-top: 4.5rem; padding-bottom: 5rem; }
+.franja-titulo {
+  margin: 0 0 2rem;
+  margin-left: calc((100% - var(--hueco)) * 5 / 12 + var(--hueco));
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ceniza);
+}
+.indice { list-style: none; margin: 0; padding: 0; }
+.indice-item { padding: 1.75rem 0; }
+.indice-item + .indice-item { border-top: 1px solid var(--junta); }
+.indice-margen {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+.indice-fecha {
+  flex: none;
+  text-align: right;
+  font-size: 1.0625rem;
+  color: var(--ceniza);
+  padding-top: .45rem;
+}
+.indice-cuerpo { max-width: var(--medida); }
+
+/* Imágenes en el margen, junto a la fecha */
+.imagen-margen {
+  display: block;
+  width: min(100%, 15rem);
+  height: auto;
+  margin: 0;
+}
+.indice-margen .imagen-margen { width: min(60%, 13rem); }
+.texto > .texto-margen { grid-column: 1; grid-row: 1 / span 2; max-width: none; display: flex; flex-direction: column; align-items: flex-end; gap: 1.5rem; }
+.texto-margen .imagen-margen { width: min(100%, 17rem); }
+.texto-margen figure { margin: 0; display: flex; flex-direction: column; align-items: flex-end; width: 100%; }
+.texto-margen figcaption { margin-top: .5rem; font-style: italic; font-size: .9375rem; color: var(--ceniza); text-align: right; }
+.indice-titulo {
+  font-size: clamp(1.75rem, 2.8vw, 2.25rem);
+  line-height: 1.12;
+  text-decoration: none;
+}
+.indice-resumen {
+  margin: .6rem 0 0;
+  font-style: italic;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: var(--ceniza);
+}
+.indice-seccion {
+  display: inline-block;
+  margin-top: .5rem;
+  font-size: 1rem;
+  color: var(--acento);
+}
+.vacio { font-style: italic; color: var(--ceniza); }
+
+/* ─── Cabeza de sección ─── */
+.cabeza-seccion {
+  padding-top: clamp(4rem, 14vh, 8rem);
+  padding-bottom: 3.5rem;
+}
+.seccion-titulo {
+  grid-column: 2;
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(3rem, 6vw, 4.75rem);
+  line-height: 1;
+  letter-spacing: -.01em;
+}
+.seccion-desc {
+  grid-column: 2;
+  margin: 1rem 0 0;
+  font-style: italic;
+  color: var(--ceniza);
+}
+
+/* ─── Un texto ─── */
+.texto {
+  padding-top: clamp(4rem, 14vh, 8rem);
+  padding-bottom: 6rem;
+  align-items: start;
+}
+.texto > * { grid-column: 2; max-width: var(--medida); }
+.texto-meta {
+  margin: 0;
+  padding-top: .9rem;
+  text-align: right;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--ceniza);
+}
+.texto-meta a { text-decoration: none; color: var(--acento); font-style: italic; }
+.texto-cabecera { grid-row: 1; }
+.texto-titulo {
+  margin: 0;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+.texto-subtitulo {
+  margin: 1.1rem 0 0;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  color: var(--ceniza);
+  text-wrap: balance;
+}
+.texto-cuerpo {
+  margin-top: 4rem;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  hanging-punctuation: first;
+}
+.texto-substack {
+  margin: 3.5rem 0 0;
+  font-style: italic;
+  font-size: 1.0625rem;
+  color: var(--ceniza);
+}
+
+/* Párrafos de libro: seguidos, con sangría desde el segundo. */
+.texto-cuerpo p { margin: 0; }
+.texto-cuerpo p + p { text-indent: 1.4em; }
+
+.texto-cuerpo h2,
+.texto-cuerpo h3 {
+  margin: 3.25rem 0 1rem;
+  font-weight: 400;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+.texto-cuerpo h2 { font-size: 1.625rem; }
+.texto-cuerpo h3 { font-size: 1.375rem; font-style: italic; }
+
+.texto-cuerpo blockquote {
+  margin: 2rem 0 2rem 1.4em;
+  font-size: 1.1875rem;
+  line-height: 1.55;
+  color: var(--ceniza);
+}
+.texto-cuerpo blockquote + p,
+.texto-cuerpo hr + p,
+.texto-cuerpo h2 + p,
+.texto-cuerpo h3 + p { text-indent: 0; }
+
+.texto-cuerpo hr {
+  border: 0;
+  height: auto;
+  margin: 2.75rem 0;
+  text-align: center;
+}
+.texto-cuerpo hr::after {
+  content: "*";
+  font-size: 1.5rem;
+  color: var(--ceniza);
+}
+
+.texto-cuerpo ul, .texto-cuerpo ol { margin: 1.25rem 0; padding-left: 1.4em; }
+.texto-cuerpo li + li { margin-top: .35rem; }
+.texto-cuerpo img { max-width: 100%; height: auto; display: block; margin: 2.5rem 0; }
+
+/* Notas al pie */
+.texto-cuerpo sup { line-height: 0; }
+.texto-cuerpo a.footnote {
+  font-size: .78em;
+  text-decoration: none;
+  color: var(--acento);
+  padding: 0 .1em;
+  font-variant-numeric: lining-nums;
+}
+.texto-cuerpo .footnotes {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--junta);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--ceniza);
+}
+.texto-cuerpo .footnotes ol { margin: 0; padding-left: 1.4em; }
+.texto-cuerpo .footnotes li + li { margin-top: .5rem; }
+.texto-cuerpo .footnotes p,
+.texto-cuerpo .footnotes p + p { text-indent: 0; }
+.texto-cuerpo a.reversefootnote { text-decoration: none; color: var(--acento); margin-left: .3em; }
+.texto-cuerpo :target { background: var(--franja); }
+
+/* Anterior / siguiente, en su propia franja */
+.vecinos-franja > .envoltorio { padding-top: 2.5rem; padding-bottom: 2.75rem; }
+.vecinos {
+  grid-column: 2;
+  max-width: var(--medida);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--hueco);
+}
+.vecino { text-decoration: none; font-size: 1.3125rem; line-height: 1.3; }
+.vecino span {
+  display: block;
+  margin-bottom: .2rem;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ceniza);
+}
+.vecino-sig { grid-column: 2; text-align: right; }
+
+/* ─── Pie: la franja verde ─── */
+.pie {
+  background: var(--verde);
+  color: var(--crema);
+  font-size: 1.0625rem;
+}
+.pie .envoltorio { padding-top: 3rem; padding-bottom: 3.5rem; }
+.pie p { margin: 0; }
+.pie-titulo {
+  font-style: italic;
+  opacity: .7;
+  overflow-wrap: anywhere;
+}
+.pie-enlaces { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin-top: .5rem !important; }
+.pie a { text-decoration-color: color-mix(in srgb, var(--crema) 40%, transparent); }
+.pie a:hover { color: var(--crema); text-decoration-color: var(--crema); }
+
+/* ─── Pantallas estrechas: el campo vacío se pliega ─── */
+@media (max-width: 54rem) {
+  body { font-size: 1.1875rem; }
+  .reticula, .indice-item { grid-template-columns: minmax(0, 1fr); }
+  .lema, .franja-titulo { margin-left: 0; }
+  .indice-margen { flex-direction: column-reverse; align-items: flex-start; gap: .75rem; margin-bottom: .35rem; }
+  .indice-margen .imagen-margen { width: min(100%, 17rem); }
+  .indice-fecha { text-align: left; padding-top: 0; font-size: 1rem; }
+  .seccion-titulo, .seccion-desc,
+  .texto > *, .vecinos { grid-column: 1; }
+  .texto > .texto-margen { grid-column: 1; grid-row: 2 / span 1; align-items: stretch; flex-direction: column; gap: 1.75rem; }
+  .texto-margen .imagen-margen { width: min(100%, 22rem); }
+  .texto-margen figure { align-items: stretch; }
+  .texto-margen figcaption { text-align: left; }
+  .texto-meta { text-align: left; padding-top: 1.25rem; }
+  .texto-meta br { display: none; }
+  .texto-meta a { margin-left: .75rem; }
+  .texto-cabecera { grid-row: 1; }
+  .texto-cuerpo { margin-top: 2.75rem; }
+  .vecinos { grid-template-columns: 1fr; gap: 1.25rem; }
+  .vecino-sig { grid-column: 1; text-align: left; }
+  .pie-titulo { margin-bottom: 1rem !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nombre, .lema { animation: none; }
+  * { transition: none !important; }
+}
+
+@media print {
+  body { background: #fff; }
+  .cabecera, .vecinos-franja, .pie, .texto-substack { display: none; }
+  .texto { display: block; padding: 0; }
+}

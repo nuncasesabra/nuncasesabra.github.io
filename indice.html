@@ -1,0 +1,29 @@
+{%- comment -%}
+  Lista de textos. Recibe include.textos (una lista de entradas).
+{%- endcomment -%}
+{%- if include.textos.size > 0 -%}
+<ol class="indice" reversed>
+  {%- for t in include.textos %}
+  <li class="indice-item">
+    <div class="indice-margen">
+      {%- if t.imagen and t.imagen != "" %}
+      <img class="imagen-margen" src="{{ t.imagen | relative_url }}" alt="{{ t.imagen_texto | default: '' }}" loading="lazy">
+      {%- endif %}
+      <time class="indice-fecha" datetime="{{ t.date | date: '%Y-%m-%d' }}">{% include fecha.html fecha=t.date corta=true %}</time>
+    </div>
+    <div class="indice-cuerpo">
+      <a class="indice-titulo" href="{{ t.url | relative_url }}">{{ t.title }}</a>
+      {%- if t.resumen and t.resumen != "" %}
+      <p class="indice-resumen">{{ t.resumen }}</p>
+      {%- endif %}
+      {%- if include.mostrar_seccion %}
+        {%- assign sec = site.secciones | where: "clave", t.categoria | first %}
+        {%- if sec %}<span class="indice-seccion">{{ sec.nombre | downcase }}</span>{% endif %}
+      {%- endif %}
+    </div>
+  </li>
+  {%- endfor %}
+</ol>
+{%- else -%}
+<p class="vacio">Todavía no hay textos aquí. Añade el primero en la carpeta <code>_posts</code>.</p>
+{%- endif -%}

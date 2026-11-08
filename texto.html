@@ -1,0 +1,47 @@
+---
+layout: default
+---
+{%- assign sec = site.secciones | where: "clave", page.categoria | first -%}
+<article class="texto envoltorio reticula">
+  <div class="texto-margen">
+  <p class="texto-meta">
+    <time datetime="{{ page.date | date: '%Y-%m-%d' }}">{% include fecha.html fecha=page.date %}</time>
+    {%- if sec %}<br><a href="{{ '/' | append: sec.clave | append: '/' | relative_url }}">{{ sec.nombre | downcase }}</a>{% endif %}
+  </p>
+  {%- if page.imagen and page.imagen != "" %}
+  <figure>
+    <img class="imagen-margen" src="{{ page.imagen | relative_url }}" alt="{{ page.imagen_texto | default: '' }}">
+    {%- if page.imagen_pie and page.imagen_pie != "" %}<figcaption>{{ page.imagen_pie }}</figcaption>{% endif %}
+  </figure>
+  {%- endif %}
+  </div>
+  <header class="texto-cabecera">
+    <h1 class="texto-titulo">{{ page.title }}</h1>
+    {%- if page.subtitulo and page.subtitulo != "" %}
+    <p class="texto-subtitulo">{{ page.subtitulo }}</p>
+    {%- endif %}
+  </header>
+
+  <div class="texto-cuerpo">
+    {{ content }}
+  </div>
+
+  {%- if page.substack and page.substack != "" %}
+  <p class="texto-substack">Este texto también está en <a href="{{ page.substack }}">Substack</a>, por si prefieres leerlo o comentarlo allí.</p>
+  {%- endif %}
+</article>
+
+{%- if page.previous or page.next %}
+<nav class="franja vecinos-franja" aria-label="Otros textos">
+  <div class="envoltorio reticula">
+    <div class="vecinos">
+      {%- if page.previous %}
+      <a class="vecino" href="{{ page.previous.url | relative_url }}"><span>anterior</span>{{ page.previous.title }}</a>
+      {%- endif %}
+      {%- if page.next %}
+      <a class="vecino vecino-sig" href="{{ page.next.url | relative_url }}"><span>siguiente</span>{{ page.next.title }}</a>
+      {%- endif %}
+    </div>
+  </div>
+</nav>
+{%- endif %}

@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<section class="portada envoltorio">
+  <h1 class="nombre">{{ site.title }}</h1>
+  {%- if site.lema and site.lema != "" %}
+  <p class="lema">{{ site.lema }}</p>
+  {%- endif %}
+</section>
+
+<section class="franja" aria-labelledby="textos">
+  <div class="envoltorio">
+    <h2 id="textos" class="franja-titulo">textos</h2>
+    {% include indice.html textos=site.posts mostrar_seccion=true %}
+  </div>
+</section>

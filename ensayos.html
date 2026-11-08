@@ -1,0 +1,15 @@
+---
+layout: default
+title: Ensayos
+permalink: /ensayos/
+---
+{%- assign textos = site.posts | where: "categoria", "ensayos" -%}
+<section class="cabeza-seccion envoltorio reticula">
+  <h1 class="seccion-titulo">Ensayos</h1>
+  <p class="seccion-desc">Textos personales y ensayos culturales.</p>
+</section>
+<section class="franja">
+  <div class="envoltorio">
+    {% include indice.html textos=textos %}
+  </div>
+</section>

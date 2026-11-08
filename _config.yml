@@ -1,0 +1,54 @@
+# ─────────────────────────────────────────────────────────────
+#  Configuración de la web. Cambia lo que quieras de aquí arriba.
+#  (Si editas este archivo, la web tarda un par de minutos en
+#  actualizarse.)
+# ─────────────────────────────────────────────────────────────
+
+title: nuncasesabrácómohayquecontaresto
+description: >-
+  Ensayos, textos y artículos sobre literatura, filosofía y lo que queda entre ambas.
+
+# Frase que aparece bajo tu nombre en la portada. Puedes dejarla vacía: ""
+lema: "Escritos sobre Proust, Pessoa, el deseo, la memoria y otras formas de no coincidir con uno mismo."
+
+# Enlaces que aparecen al pie de la página. Deja vacío ("") lo que no uses.
+substack: "https://TU-NOMBRE.substack.com"
+correo: ""
+letterboxd: ""
+
+# Cuando tengas dominio propio, pon aquí la dirección (p. ej. https://nuncasesabracomohayquecontaresto.com)
+# Mientras tanto, la de GitHub: https://TU-USUARIO.github.io
+url: ""
+baseurl: ""
+
+lang: es
+timezone: Europe/Madrid
+
+# Nombres de las secciones (deben coincidir con "categoria" en cada texto)
+secciones:
+  - clave: ensayos
+    nombre: Ensayos
+  - clave: academico
+    nombre: Académico
+
+# ─── Lo de abajo no hace falta tocarlo ───────────────────────
+permalink: /textos/:title/
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: texto
+markdown: kramdown
+kramdown:
+  input: GFM
+  footnote_backlink: "↩"
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+feed:
+  path: feed.xml
+exclude:
+  - GUIA.md
+  - README.md
+  - plantilla-texto-nuevo.md

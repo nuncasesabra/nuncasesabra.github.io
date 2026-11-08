@@ -1,0 +1,15 @@
+---
+layout: default
+title: Académico
+permalink: /academico/
+---
+{%- assign textos = site.posts | where: "categoria", "academico" -%}
+<section class="cabeza-seccion envoltorio reticula">
+  <h1 class="seccion-titulo">Académico</h1>
+  <p class="seccion-desc">Artículos, ponencias y trabajos de investigación.</p>
+</section>
+<section class="franja">
+  <div class="envoltorio">
+    {% include indice.html textos=textos %}
+  </div>
+</section>
